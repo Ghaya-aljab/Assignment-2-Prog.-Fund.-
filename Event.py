@@ -1,8 +1,10 @@
-from Location import Location
+from Location import Location # calling the location class
 import random
 from datetime import datetime, timedelta
 
 class Event:
+    ''' A class representing an Event '''
+    # Constructor method for initializing an Event object with all necessary attributes
     def __init__(self, name, start_date, end_date, location: Location, is_tour=False, guide_name=None, group_size=None):
         self._name = name
         self._start_date = start_date
@@ -12,6 +14,7 @@ class Event:
         self._guide_name = guide_name
         self._group_size = group_size
 
+    # Setter and getter function for event attributes
     def get_name(self):
         return self._name
 
@@ -56,7 +59,7 @@ class Event:
         name = random.choice(event_names)
         location = random.choice(locations)
         is_tour = random.choice([True, False])
-        guide_name = 'John Doe' if is_tour else None
+        guide_name = 'Saif' if is_tour else None
         group_size = random.randint(15, 40) if is_tour else None
 
         return Event(name, start_date, end_date, location, is_tour, guide_name, group_size)
@@ -65,3 +68,4 @@ class Event:
         start_date_str = self._start_date.strftime('%Y-%m-%d')
         end_date_str = self._end_date.strftime('%Y-%m-%d')
         return f"{self._name} - Location: {self._location.value}, Start: {start_date_str}, End: {end_date_str}"
+
