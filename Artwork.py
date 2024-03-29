@@ -2,6 +2,8 @@ import random
 from Location import Location
 
 class Artwork:
+    """ A class that represents Artwork. """
+    # Constructor method for initializing an ArtWork object with attributes detailing its creation and significance
     def __init__(self, title, artist, year):
         self.title = title
         self.artist = artist
@@ -17,6 +19,7 @@ class Artwork:
         locations = list(Location)
         return random.choice(locations)
 
+    # Setter and getter functions for the artwork attributes
     def set_title(self, title):
         self.title = title
 
@@ -46,3 +49,4 @@ class Artwork:
 
     def get_location(self):
         return self._location
+
