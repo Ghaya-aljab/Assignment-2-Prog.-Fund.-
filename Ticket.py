@@ -5,6 +5,7 @@ class Ticket:
 
     VAT_RATE = 1.05  # 5% VAT
 
+    # Constructor method for initializing a Ticket object with details of the event, age of visitor, and number of tickets
     def __init__(self, event : Event, age, num_tickets):
         self._event = event
         self._age = age
@@ -39,9 +40,10 @@ class Ticket:
         base_price = 63  # Base price for adults
         if self._age < 18 or self._age > 60:
             return 0  # Free tickets for children and seniors
-        elif self._num_tickets > 5:  # Group discount for more than five tickets
+        elif self._num_tickets >= 5:  # Group discount for more than five tickets
             price_before_vat = (base_price * 0.5) * self._num_tickets
         else:
             price_before_vat = base_price * self._num_tickets
         return price_before_vat * Ticket.VAT_RATE
+
 
