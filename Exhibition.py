@@ -5,6 +5,7 @@ from Artwork import Artwork
 class Exhibition(Event):
     """A class that represents an exhibition at the museum, inheriting from Event and adding artworks and special features."""
 
+    # Constructor method for initializing an Exhibition object with artwork collection and special features, inheriting from Event
     def __init__(self, name, start_date, end_date, location: Location, artworks : Artwork, special_features):
         # Assuming that location is an instance of the Location class
         super().__init__(name, start_date, end_date, location)
