@@ -1,11 +1,13 @@
 class Person:
     ''' A class representing a person '''
 
+    # Constructor method for initializing a Person object with all necessary attributes
     def __init__(self, name, age, national_id):
         self._name = name
         self._age = age
         self._national_id = national_id
 
+    # Setter and getter methods for person attributes
     def get_name(self):
         return self._name
 
