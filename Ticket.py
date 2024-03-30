@@ -1,4 +1,12 @@
-from Event import Event
+from enum import Enum, auto
+
+
+class VisitorCategory(Enum):
+    ADULT = 1
+    KID = 2
+    ELDER = 3
+    STUDENT = 4
+
 
 class Ticket:
     """ A class that represents a ticket for an event at the museum. """
@@ -6,10 +14,11 @@ class Ticket:
     VAT_RATE = 1.05  # 5% VAT
 
     # Constructor method for initializing a Ticket object with details of the event, age of visitor, and number of tickets
-    def __init__(self, event : Event, age, num_tickets):
+    def __init__(self, event, age, num_tickets, category=VisitorCategory.ADULT):
         self._event = event
         self._age = age
         self._num_tickets = num_tickets
+        self._category = category
         self._price = self.calculate_price()
 
     def get_event(self):
@@ -38,12 +47,16 @@ class Ticket:
 
     def calculate_price(self):
         base_price = 63  # Base price for adults
-        if self._age < 18 or self._age > 60:
-            return 0  # Free tickets for children and seniors
-        elif self._num_tickets >= 5:  # Group discount for more than five tickets
-            price_before_vat = (base_price * 0.5) * self._num_tickets
+
+        # Free tickets for children, seniors, and students
+        if self._category in [VisitorCategory.KID, VisitorCategory.ELDER, VisitorCategory.STUDENT]:
+            return 0
+
+        # Check for group discount for more than five tickets
+        if self._num_tickets >= 5:
+            price_before_vat = (base_price * 0.5) * self._num_tickets  # Corrected to 50% discount
         else:
             price_before_vat = base_price * self._num_tickets
+
+        # Apply VAT
         return price_before_vat * Ticket.VAT_RATE
-
-
