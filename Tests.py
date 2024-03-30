@@ -7,6 +7,7 @@ from Museum import Museum
 from Artwork import Artwork
 from Ticket import Ticket
 from Location import Location
+from Ticket import VisitorCategory
 
 def create_visitor():
     try:
@@ -40,6 +41,7 @@ def create_visitor():
                 print("Invalid input. Exiting.")
                 return None
 
+
         # Prompt user to enter their national ID
         national_id = input("Please enter your national ID: ")
         # Check if the national ID has the correct format
@@ -53,7 +55,12 @@ def create_visitor():
                 return None
 
         # Return a Visitor object with the provided information
-        return Visitor(name, age, national_id)
+        visitor = Visitor(name, age, national_id)  # Assuming Visitor instantiation is correct.
+
+        # Add this line to print the visitor details
+        print(f"\nVisitor Created: Name: {name}, Age: {age}, National ID: {national_id}")
+
+        return visitor
     except Exception as e:
         print(f"An error occurred: {e}")
         return None
@@ -115,8 +122,12 @@ def create_employee():
                 print("Invalid input. Exiting.")
                 return None
 
-        # Return an Employee object with the provided information
-        return Employee(name, age, national_id, employee_id)
+        employee = Employee(name, age, national_id, employee_id)  # Assuming Employee instantiation is correct.
+
+        # Add this line to print the employee details
+        print(f"\nEmployee Created: Name: {name}, Age: {age}, National ID: {national_id}, Employee ID: {employee_id}")
+
+        return employee
     except Exception as e:
         print(f"An error occurred: {e}")
         return None
@@ -130,14 +141,20 @@ def create_artwork():
         artist = input("Enter artist name: ")
         # Prompt user to enter the year of creation
         year = input("Enter year of creation: ")
+
         # Create a new Artwork object with the collected information
         artwork = Artwork(title, artist, year)
+
+        # Print statement confirming the addition of the artwork
+        print(f"You added the artwork '{title}' by {artist}, created in {year}.")
+
         # Return the successfully created Artwork object
         return artwork
     except ValueError:
         # Inform the user of the error and prompt for correct input
         print("Invalid input. Please enter valid details for the artwork.")
         return None
+
 
 def create_event():
     try:
@@ -168,15 +185,21 @@ def purchase_tickets(selected_event, visitor):
     num_adults = int(input("How many adults are with you? "))
     num_kids = int(input("How many kids are with you? "))
     num_elders = int(input("How many elders are with you? "))
+    num_students = int(input("How many students are with you? "))
 
-    # Calculating ticket price
-    total_price = 0
-    total_price += Ticket(selected_event, visitor.get_age(), num_adults).get_price()
-    total_price += Ticket(selected_event, 12, num_kids).get_price()  # Assuming age 12 for kids
-    total_price += Ticket(selected_event, 65, num_elders).get_price()  # Assuming age 65 for elders
+    # Calculate ticket prices for each category
+    adult_tickets = Ticket(selected_event, visitor.get_age(), num_adults, VisitorCategory.ADULT)
+    kid_tickets = Ticket(selected_event, 12, num_kids, VisitorCategory.KID)  # Assuming age 12 for kids
+    elder_tickets = Ticket(selected_event, 65, num_elders, VisitorCategory.ELDER)  # Assuming age 65 for elders
+    student_tickets = Ticket(selected_event, visitor.get_age(), num_students, VisitorCategory.STUDENT)
+
+    # Sum up the total price
+    total_price = adult_tickets.get_price() + kid_tickets.get_price() + elder_tickets.get_price() + student_tickets.get_price()
 
     print(f"\nTotal price for the tickets is: {total_price:.2f} AED")
     print("Thank you for your purchase. Enjoy your visit and the wonders our museum has to offer!")
+
+
 
 
 def run_test_case():
@@ -242,7 +265,8 @@ def run_test_case():
                 else:
                     print("\nInvalid option. Please try again.")
 
-    except Exception as e:  # Catch any exceptions
+    except Exception as e:  # Catch any e
+        # exceptions
         print(f"An error occurred: {str(e)}")
 
 # Running the test case
