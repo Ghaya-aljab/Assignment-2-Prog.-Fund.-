@@ -133,25 +133,27 @@ def create_employee():
         return None
 
 
+
 def create_artwork():
     try:
-        # Prompt user to enter the artwork title
         title = input("\nEnter artwork title: ")
-        # Prompt user to enter the artist's name
         artist = input("Enter artist name: ")
-        # Prompt user to enter the year of creation
-        year = input("Enter year of creation: ")
 
-        # Create a new Artwork object with the collected information
+        # Initialize 'year' with None to enter the loop
+        year = None
+        current_year = datetime.now().year
+
+        # Keep asking for the year until a valid one is entered
+        while year is None or not year.isdigit() or int(year) > current_year or int(year) < 1000:
+            year = input("Enter year of creation: ")
+            if not year.isdigit() or int(year) > current_year or int(year) < 1000:
+                print(f"Invalid year. Please ensure the year is between 1000 and {current_year}.")
+
+        # Once a valid year is provided, create and return the Artwork object
         artwork = Artwork(title, artist, year)
-
-        # Print statement confirming the addition of the artwork
         print(f"You added the artwork '{title}' by {artist}, created in {year}.")
-
-        # Return the successfully created Artwork object
         return artwork
     except ValueError:
-        # Inform the user of the error and prompt for correct input
         print("Invalid input. Please enter valid details for the artwork.")
         return None
 
